@@ -2,7 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 
-const indexRouter = require("./routes/indexRouter");
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+const indexRouter = require("./routes/index");
 
 const prisma = require("./lib/prisma");
 
