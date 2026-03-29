@@ -4,10 +4,15 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+require("./config/passport.js");
+
+const passport = require("passport");
 
 const indexRouter = require("./routes/index");
 
-const prisma = require("./lib/prisma");
+// const prisma = require("./lib/prisma");
+
+app.use(passport.initialize());
 
 app.use("/", indexRouter);
 
