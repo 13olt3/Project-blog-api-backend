@@ -1,11 +1,11 @@
 const { Router } = require("express");
 const userRouter = require("./userRoutes");
-// const postRouter = require("./postRoutes");
+const postRouter = require("./postRoutes");
 
 const indexRouter = Router({ mergeParams: true });
 
 indexRouter.use("/api/users", userRouter);
-// indexRouter.use("/api/posts", postRouter);
+indexRouter.use("/api/posts", postRouter);
 
 //get profile page
 //get posts page

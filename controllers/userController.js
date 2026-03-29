@@ -19,10 +19,6 @@ const validateLogin = [
   body("username").trim().notEmpty().withMessage("Username is required"),
   body("password").isLength({ min: 1 }),
 ];
-const testRoute = (req, res, next) => {
-  console.log("connecting");
-  next();
-};
 
 const userController = {
   createUser: [
@@ -54,10 +50,6 @@ const userController = {
   loginUser: [
     validateLogin,
     async (req, res) => {
-      //check if username is valid
-      //assign username to a variable
-      //check if variable.password compares to input password with bcrypt
-      //create jwt token with sign
       const data = matchedData(req);
       const userMatch = await prisma.user.findUnique({
         where: { username: data.username },
@@ -80,11 +72,12 @@ const userController = {
   ],
 
   userProfile: [
-    testRoute,
     passport.authenticate("jwt", { session: false }),
     async (req, res) => {
+      // console.log(req.user);
       res.json({
         message: "authentication successful",
+        userId: req.user.id,
       });
     },
   ],
