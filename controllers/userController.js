@@ -24,11 +24,10 @@ const userController = {
   createUser: [
     validateUser,
     async (req, res) => {
-      console.log("test");
       const errors = validationResult(req);
 
       if (!errors.isEmpty()) {
-        res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ errors: errors.array() });
       }
       try {
         const { username, email, password } = matchedData(req);
@@ -40,10 +39,12 @@ const userController = {
             email: email,
           },
         });
-        res.status(201).json({ message: "User created!" });
-      } catch (err) {}
+        return res.status(201).json({ message: "User created!" });
+      } catch (err) {
+        console.error(err);
+      }
 
-      res.status(500).json({ message: "Internal Server Error" });
+      return res.status(500).json({ message: "Internal Server Error" });
       //Use this (error500) if you don't know what caused the error.
     },
   ],
